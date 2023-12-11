@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "145695258509",
+    "project_id": "tuncjob",
+    "storage_bucket": "tuncjob.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:145695258509:android:9d8515d4b069e3e0a12fc4",
+        "android_client_info": {
+          "package_name": "site.tunckankilic.tuncjob"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBrW9VqpSeAdwXjLT5ZQPlckFeM2rNhEaE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
