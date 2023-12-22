@@ -28,7 +28,7 @@ class Start extends StatelessWidget {
               ),
               const SizedBox(height: 50),
               Text('Welcome to Arrow',
-                  style: Theme.of(context).textTheme.headline2),
+                  style: Theme.of(context).textTheme.displayMedium),
               const SizedBox(height: 20),
               Text(
                 'Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.',

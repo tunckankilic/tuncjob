@@ -31,7 +31,7 @@ class CustomTextContainer extends StatelessWidget {
             text,
             style: Theme.of(context)
                 .textTheme
-                .headline6!
+                .titleLarge!
                 .copyWith(color: Colors.white),
           ),
         ),

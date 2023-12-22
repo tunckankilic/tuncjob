@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tuncjob/models/models.dart';
+import 'package:tuncjob/screens/screens.dart';
 import 'package:tuncjob/widgets/widgets.dart';
 
 class UserCard extends StatelessWidget {
@@ -61,12 +62,12 @@ class UserCard extends StatelessWidget {
                       '${user.name}, ${user.age}',
                       style: Theme.of(context)
                           .textTheme
-                          .headline2!
+                          .displayMedium!
                           .copyWith(color: Colors.white),
                     ),
                     Text(
                       user.jobTitle,
-                      style: Theme.of(context).textTheme.headline3!.copyWith(
+                      style: Theme.of(context).textTheme.displaySmall!.copyWith(
                           color: Colors.white, fontWeight: FontWeight.normal),
                     ),
                     Row(
@@ -76,17 +77,22 @@ class UserCard extends StatelessWidget {
                         UserImageSmall(url: user.imageUrls[3]),
                         UserImageSmall(url: user.imageUrls[4]),
                         const SizedBox(width: 10),
-                        Container(
-                          width: 35,
-                          height: 35,
-                          decoration: const BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: Colors.white,
-                          ),
-                          child: Icon(
-                            Icons.info_outline,
-                            size: 25,
-                            color: Theme.of(context).primaryColor,
+                        GestureDetector(
+                          onTap: () => Navigator.of(context).pushNamed(
+                              UsersScreen.routeName,
+                              arguments: user),
+                          child: Container(
+                            width: 35,
+                            height: 35,
+                            decoration: const BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: Colors.white,
+                            ),
+                            child: Icon(
+                              Icons.info_outline,
+                              size: 25,
+                              color: Theme.of(context).primaryColor,
+                            ),
                           ),
                         ),
                       ],

@@ -33,7 +33,7 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         title: 'TuncJob',
         theme: theme(),
-        initialRoute: HomeScreen.routeName,
+        initialRoute: OnboardingScreen.routeName,
         onGenerateRoute: AppRouter.onGenerateRoute,
       ),
     );

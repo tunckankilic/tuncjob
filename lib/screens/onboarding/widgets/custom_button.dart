@@ -27,17 +27,17 @@ class CustomButton extends StatelessWidget {
           tabController.animateTo(tabController.index + 1);
         },
         style: ElevatedButton.styleFrom(
-          primary: Colors.transparent,
+          backgroundColor: Colors.transparent,
           elevation: 0,
         ),
-        child: Container(
+        child: SizedBox(
           width: double.infinity,
           child: Center(
             child: Text(
               text,
               style: Theme.of(context)
                   .textTheme
-                  .headline4!
+                  .headlineMedium!
                   .copyWith(color: Colors.white),
             ),
           ),

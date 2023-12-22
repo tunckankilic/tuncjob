@@ -31,7 +31,7 @@ class Location extends StatelessWidget {
                 totalSteps: 6,
                 currentStep: 6,
                 selectedColor: Theme.of(context).primaryColor,
-                unselectedColor: Theme.of(context).backgroundColor,
+                unselectedColor: Theme.of(context).colorScheme.background,
               ),
               const SizedBox(height: 10),
               CustomButton(tabController: tabController, text: 'DONE'),

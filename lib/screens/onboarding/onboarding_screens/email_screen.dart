@@ -30,7 +30,7 @@ class Email extends StatelessWidget {
                 totalSteps: 6,
                 currentStep: 1,
                 selectedColor: Theme.of(context).primaryColor,
-                unselectedColor: Theme.of(context).backgroundColor,
+                unselectedColor: Theme.of(context).colorScheme.background,
               ),
               const SizedBox(height: 10),
               CustomButton(tabController: tabController, text: 'NEXT STEP'),
