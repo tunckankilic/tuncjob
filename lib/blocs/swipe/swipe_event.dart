@@ -7,23 +7,23 @@ sealed class SwipeEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class SwipeLeftEvent extends SwipeEvent {
+class SwipeLeft extends SwipeEvent {
   final User user;
-  const SwipeLeftEvent({required this.user});
+  const SwipeLeft({required this.user});
   @override
   List<Object> get props => [user];
 }
 
-class SwipeRightEvent extends SwipeEvent {
+class SwipeRight extends SwipeEvent {
   final User user;
-  const SwipeRightEvent({required this.user});
+  const SwipeRight({required this.user});
   @override
   List<Object> get props => [user];
 }
 
-class LoadUsersEvent extends SwipeEvent {
+class LoadUsers extends SwipeEvent {
   final List<User> users;
-  const LoadUsersEvent({required this.users});
+  const LoadUsers({required this.users});
   @override
   List<Object> get props => [users];
 }

@@ -5,11 +5,11 @@ import 'package:tuncjob/screens/onboarding/widgets/widgets.dart';
 class Bio extends StatelessWidget {
   final TabController tabController;
 
-  const Bio({
+  Bio({
     Key? key,
     required this.tabController,
   }) : super(key: key);
-
+  final TextEditingController textEditingController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -18,14 +18,17 @@ class Bio extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         mainAxisSize: MainAxisSize.max,
         children: [
-          const Column(
+          Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              CustomTextHeader(text: 'Describe Yourself'),
-              CustomTextField(hint: 'ENTER YOUR BIO'),
-              SizedBox(height: 100),
-              CustomTextHeader(text: 'What Do You Like?'),
-              Row(
+              const CustomTextHeader(text: 'Describe Yourself'),
+              CustomTextField(
+                hint: 'ENTER YOUR BIO',
+                textEditingController: textEditingController,
+              ),
+              const SizedBox(height: 100),
+              const CustomTextHeader(text: 'What Do You Like?'),
+              const Row(
                 children: [
                   CustomTextContainer(text: 'MUSIC'),
                   CustomTextContainer(text: 'ECONOMICS'),
@@ -33,7 +36,7 @@ class Bio extends StatelessWidget {
                   CustomTextContainer(text: 'ART'),
                 ],
               ),
-              Row(
+              const Row(
                 children: [
                   CustomTextContainer(text: 'NATURE'),
                   CustomTextContainer(text: 'HIKING'),

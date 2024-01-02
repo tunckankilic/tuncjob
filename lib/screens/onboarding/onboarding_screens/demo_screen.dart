@@ -5,11 +5,11 @@ import 'package:tuncjob/screens/onboarding/widgets/widgets.dart';
 class Demo extends StatelessWidget {
   final TabController tabController;
 
-  const Demo({
+  Demo({
     Key? key,
     required this.tabController,
   }) : super(key: key);
-
+  final TextEditingController textEditingController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -18,16 +18,19 @@ class Demo extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         mainAxisSize: MainAxisSize.max,
         children: [
-          const Column(
+          Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              CustomTextHeader(text: 'What\'s Your Gender?'),
-              SizedBox(height: 20),
-              CustomCheckbox(text: 'MALE'),
-              CustomCheckbox(text: 'FEMALE'),
-              SizedBox(height: 100),
-              CustomTextHeader(text: 'What\'s Your Age?'),
-              CustomTextField(hint: 'ENTER YOUR AGE'),
+              const CustomTextHeader(text: 'What\'s Your Gender?'),
+              const SizedBox(height: 20),
+              const CustomCheckbox(text: 'MALE'),
+              const CustomCheckbox(text: 'FEMALE'),
+              const SizedBox(height: 100),
+              const CustomTextHeader(text: 'What\'s Your Age?'),
+              CustomTextField(
+                hint: 'ENTER YOUR AGE',
+                textEditingController: textEditingController,
+              ),
             ],
           ),
           Column(

@@ -2,9 +2,13 @@ import 'package:flutter/material.dart';
 
 class CustomTextField extends StatelessWidget {
   final String hint;
+  final TextEditingController? textEditingController;
+  final Function(String)? onChanged;
   const CustomTextField({
     Key? key,
     required this.hint,
+    this.onChanged,
+    this.textEditingController,
   }) : super(key: key);
 
   @override
@@ -24,7 +28,7 @@ class CustomTextField extends StatelessWidget {
               borderSide: BorderSide(color: Colors.white),
             ),
           ),
-          onChanged: (value) {}),
+          onChanged: onChanged),
     );
   }
 }

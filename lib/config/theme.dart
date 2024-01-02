@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 ThemeData theme() {
   return ThemeData(
+    useMaterial3: true,
     primaryColor: const Color.fromARGB(255, 2, 16, 144),
     // primaryColorDark: Color(0xFFFC0028),
     // primaryColorLight: Color(0xFFFE9AAA),

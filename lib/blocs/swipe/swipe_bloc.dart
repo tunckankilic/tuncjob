@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:tuncjob/models/models.dart';
@@ -6,41 +8,34 @@ part 'swipe_event.dart';
 part 'swipe_state.dart';
 
 class SwipeBloc extends Bloc<SwipeEvent, SwipeState> {
-  SwipeBloc() : super(SwipeLoading());
-
-  @override
-  Stream<SwipeState> mapEventToState(SwipeEvent event) async* {
-    if (event is LoadUsersEvent) {
-      yield* _mapLoadUsersToState(event);
-    } else if (event is SwipeRightEvent) {
-      yield* _mapSwipeRightToState(event, state);
-    } else if (event is SwipeLeftEvent) {
-      yield* _mapSwipeLeftToState(event, state);
-    }
+  SwipeBloc() : super(SwipeLoading()) {
+    on<LoadUsers>(_onLoadUsers);
+    on<SwipeLeft>(_onSwipeLeft);
+    on<SwipeRight>(_onSwipeRight);
   }
 
-  Stream<SwipeState> _mapLoadUsersToState(LoadUsersEvent event) async* {
-    yield SwipeLoaded(users: event.users);
+  void _onLoadUsers(LoadUsers event, Emitter<SwipeState> emit) {
+    emit(SwipeLoaded(users: event.users));
   }
 
-  Stream<SwipeState> _mapSwipeRightToState(
-      SwipeRightEvent event, SwipeState state) async* {
+  void _onSwipeLeft(SwipeLeft event, Emitter<SwipeState> emit) {
     if (state is SwipeLoaded) {
+      final state = this.state as SwipeLoaded;
       try {
-        yield SwipeLoaded(
+        emit(SwipeLoaded(
           users: List.from(state.users)..remove(event.user),
-        );
+        ));
       } catch (_) {}
     }
   }
 
-  Stream<SwipeState> _mapSwipeLeftToState(
-      SwipeLeftEvent event, SwipeState state) async* {
+  void _onSwipeRight(SwipeRight event, Emitter<SwipeState> emit) {
     if (state is SwipeLoaded) {
+      final state = this.state as SwipeLoaded;
       try {
-        yield SwipeLoaded(
+        emit(SwipeLoaded(
           users: List.from(state.users)..remove(event.user),
-        );
+        ));
       } catch (_) {}
     }
   }
