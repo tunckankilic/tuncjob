@@ -1,9 +1,7 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart' as fa;
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tuncjob/cubits/sign_up/signup_cubit.dart';
+import 'package:tuncjob/screens/home/home_screen.dart';
 
 class CustomButton extends StatelessWidget {
   final TabController tabController;
@@ -36,6 +34,8 @@ class CustomButton extends StatelessWidget {
           tabController.animateTo(tabController.index + 1);
           if (tabController.index == 2) {
             context.read<SignupCubit>().signUpWithCredentials();
+          } else if (tabController.index == 5) {
+            Navigator.of(context).pushReplacementNamed(HomeScreen.routeName);
           }
         },
         style: ElevatedButton.styleFrom(

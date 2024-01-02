@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:tuncjob/blocs/onboarding/onboarding_bloc.dart';
 import 'package:tuncjob/cubits/sign_up/signup_cubit.dart';
 import 'package:tuncjob/repositories/auth/auth_repository.dart';
+import 'package:tuncjob/repositories/database/database_storage.dart';
+import 'package:tuncjob/repositories/storage/storage_repository.dart';
 import 'package:tuncjob/screens/onboarding/onboarding_screens/social_screen.dart';
 import 'package:tuncjob/widgets/widgets.dart';
 
@@ -15,10 +18,21 @@ class OnboardingScreen extends StatelessWidget {
   static Route route() {
     return MaterialPageRoute(
       settings: const RouteSettings(name: routeName),
-      builder: (context) => BlocProvider(
-          create: (context) =>
-              SignupCubit(authRepository: context.read<AuthRepository>()),
-          child: const OnboardingScreen()),
+      builder: (context) => MultiBlocProvider(providers: [
+        BlocProvider(
+          create: (context) => SignupCubit(
+            authRepository: context.read<AuthRepository>(),
+          ),
+        ),
+        BlocProvider(
+          create: (context) => OnboardingBloc(
+            databaseStorage: context.read<DatabaseStorage>(),
+            storageRepository: context.read<StorageRepository>(),
+          )..add(
+              StartOnboarding(),
+            ),
+        ),
+      ], child: const OnboardingScreen()),
     );
   }
 

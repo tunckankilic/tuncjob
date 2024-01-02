@@ -68,7 +68,7 @@ ThemeData theme() {
         onError: Colors.red[200]!,
         background: const Color(0xFFF4F4F4),
         onBackground: Colors.white54,
-        surface: Colors.white,
-        onSurface: Colors.white),
+        surface: Colors.red,
+        onSurface: Colors.black),
   );
 }
