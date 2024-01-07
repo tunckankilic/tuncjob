@@ -17,7 +17,7 @@ class Pictures extends StatelessWidget {
     return BlocBuilder<OnboardingBloc, OnboardingState>(
       builder: (context, state) {
         if (state is OnboardingLoading) {
-          return Center(
+          return const Center(
             child: CircularProgressIndicator(),
           );
         }

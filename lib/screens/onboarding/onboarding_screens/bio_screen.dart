@@ -17,7 +17,7 @@ class Bio extends StatelessWidget {
     return BlocBuilder<OnboardingBloc, OnboardingState>(
       builder: (context, state) {
         if (state is OnboardingLoading) {
-          return Center(
+          return const Center(
             child: CircularProgressIndicator(),
           );
         }
@@ -42,8 +42,8 @@ class Bio extends StatelessWidget {
                             );
                       },
                     ),
-                    SizedBox(height: 50),
-                    CustomTextHeader(text: 'What do you do?'),
+                    const SizedBox(height: 50),
+                    const CustomTextHeader(text: 'What do you do?'),
                     CustomTextField(
                       hint: 'ENTER YOUR JOB TITLE',
                       onChanged: (value) {
@@ -54,7 +54,7 @@ class Bio extends StatelessWidget {
                             );
                       },
                     ),
-                    SizedBox(height: 50),
+                    const SizedBox(height: 50),
                     const CustomTextHeader(text: 'What Do You Like?'),
                     const Row(
                       children: [
@@ -91,7 +91,7 @@ class Bio extends StatelessWidget {
             ),
           );
         } else {
-          return Center(
+          return const Center(
             child: Text("Something Went Wrong"),
           );
         }

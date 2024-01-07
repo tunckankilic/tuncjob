@@ -72,10 +72,10 @@ class UserCard extends StatelessWidget {
                     ),
                     Row(
                       children: [
-                        UserImageSmall(url: user.imageUrls[1]),
-                        UserImageSmall(url: user.imageUrls[2]),
-                        UserImageSmall(url: user.imageUrls[3]),
-                        UserImageSmall(url: user.imageUrls[4]),
+                        UserImage.small(url: user.imageUrls[1]),
+                        UserImage.small(url: user.imageUrls[2]),
+                        UserImage.small(url: user.imageUrls[3]),
+                        UserImage.small(url: user.imageUrls[4]),
                         const SizedBox(width: 10),
                         GestureDetector(
                           onTap: () => Navigator.of(context).pushNamed(

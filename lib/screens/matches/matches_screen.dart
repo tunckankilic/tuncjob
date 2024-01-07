@@ -44,7 +44,7 @@ class MatchesScreen extends StatelessWidget {
                     itemBuilder: (context, index) {
                       return Column(
                         children: [
-                          UserImageSmall(
+                          UserImage.small(
                             height: 70,
                             width: 70,
                             url:
@@ -75,10 +75,11 @@ class MatchesScreen extends StatelessWidget {
                           arguments: activeMatches[index]),
                       child: Row(
                         children: [
-                          UserImageSmall(
+                          UserImage.small(
                             height: 70,
                             width: 70,
-                            url: activeMatches[index].matchedUser.imageUrls[0],
+                            url:
+                                inactiveMatches[index].matchedUser.imageUrls[0],
                           ),
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,

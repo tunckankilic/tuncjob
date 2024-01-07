@@ -34,7 +34,7 @@ class CustomButton extends StatelessWidget {
           tabController.animateTo(tabController.index + 1);
           if (tabController.index == 2) {
             context.read<SignupCubit>().signUpWithCredentials();
-          } else if (tabController.index == 5) {
+          } else if (tabController.index == 6) {
             Navigator.of(context).pushReplacementNamed(HomeScreen.routeName);
           }
         },

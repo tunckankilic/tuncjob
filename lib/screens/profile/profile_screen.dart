@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:tuncjob/models/models.dart';
-import 'package:tuncjob/screens/onboarding/widgets/widgets.dart';
-import 'package:tuncjob/widgets/widgets.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:tuncjob/blocs/auth/auth_bloc.dart';
+import 'package:tuncjob/blocs/profile/profile_bloc.dart';
+import 'package:tuncjob/repositories/auth/auth_repository.dart';
+
+import '/screens/screens.dart';
+import '/widgets/widgets.dart';
 
 class ProfileScreen extends StatelessWidget {
   static const String routeName = '/profile';
@@ -10,132 +14,134 @@ class ProfileScreen extends StatelessWidget {
 
   static Route route() {
     return MaterialPageRoute(
-      settings: const RouteSettings(name: routeName),
-      builder: (context) => const ProfileScreen(),
-    );
+        settings: const RouteSettings(name: routeName),
+        builder: (context) {
+          return BlocProvider.of<AuthBloc>(context).state.status ==
+                  AuthStatus.unAuthenticate
+              ? const OnboardingScreen()
+              : const ProfileScreen();
+        });
   }
 
   @override
   Widget build(BuildContext context) {
-    final User user = User.users[0];
     return Scaffold(
       appBar: const CustomAppBar(
         title: 'PROFILE',
       ),
-      body: Column(
-        children: [
-          const SizedBox(height: 10),
-          Stack(
-            children: [
-              Container(
-                height: MediaQuery.of(context).size.height / 4,
-                decoration: BoxDecoration(
-                    image: DecorationImage(
-                      image: NetworkImage(user.imageUrls[0]),
-                      fit: BoxFit.cover,
-                    ),
-                    borderRadius: BorderRadius.circular(15.0),
-                    boxShadow: const [
-                      BoxShadow(
-                        color: Colors.grey,
-                        offset: Offset(1, 1),
-                        blurRadius: 2,
-                        spreadRadius: 2,
+      body: SingleChildScrollView(
+        child: BlocBuilder<ProfileBloc, ProfileState>(
+          builder: (context, state) {
+            if (state is ProfileLoading) {
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            }
+            if (state is ProfileLoaded) {
+              return Column(
+                children: [
+                  const SizedBox(height: 10),
+                  UserImage.medium(
+                    url: state.user.imageUrls[0],
+                    child: Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(15),
+                        gradient: LinearGradient(
+                          colors: [
+                            Theme.of(context).primaryColor.withOpacity(0.1),
+                            Theme.of(context).primaryColor.withOpacity(0.9),
+                          ],
+                          begin: Alignment.topCenter,
+                          end: Alignment.bottomCenter,
+                        ),
                       ),
-                    ]),
-              ),
-              Container(
-                height: MediaQuery.of(context).size.height / 4,
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    colors: [
-                      Theme.of(context).primaryColor.withOpacity(0.1),
-                      Theme.of(context).primaryColor.withOpacity(0.9),
-                    ],
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter,
-                  ),
-                  borderRadius: BorderRadius.circular(15.0),
-                ),
-                child: Align(
-                  alignment: Alignment.bottomCenter,
-                  child: Padding(
-                    padding: const EdgeInsets.only(bottom: 40.0),
-                    child: Text(
-                      user.name,
-                      style: Theme.of(context).textTheme.displayLarge!.copyWith(
-                            color: Colors.white,
+                      child: Align(
+                        alignment: Alignment.bottomCenter,
+                        child: Padding(
+                          padding: const EdgeInsets.only(bottom: 40.0),
+                          child: Text(
+                            state.user.name,
+                            style: Theme.of(context)
+                                .textTheme
+                                .displayLarge!
+                                .copyWith(color: Colors.white),
                           ),
+                        ),
+                      ),
                     ),
                   ),
-                ),
-              ),
-            ],
-          ),
-          Padding(
-            padding: const EdgeInsets.all(20.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const TitleWithIcon(title: 'Biography', icon: Icons.edit),
-                Text(
-                  user.bio,
-                  style: Theme.of(context)
-                      .textTheme
-                      .bodyLarge!
-                      .copyWith(height: 1.5),
-                ),
-                const SizedBox(height: 10),
-                const TitleWithIcon(title: 'Pictures', icon: Icons.edit),
-                SizedBox(
-                  height: 125,
-                  child: ListView.builder(
-                    shrinkWrap: true,
-                    scrollDirection: Axis.horizontal,
-                    itemCount: 5,
-                    itemBuilder: (context, index) {
-                      return Padding(
-                        padding: const EdgeInsets.only(right: 5.0),
-                        child: Container(
-                          height: 125,
-                          width: 100,
-                          decoration: BoxDecoration(
-                            image: DecorationImage(
-                              image: NetworkImage(
-                                user.imageUrls[0],
-                              ),
-                              fit: BoxFit.cover,
-                            ),
-                            borderRadius: BorderRadius.circular(2.0),
-                            border: Border.all(
-                              color: Theme.of(context).primaryColor,
+                  Padding(
+                    padding: const EdgeInsets.all(20.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const TitleWithIcon(
+                            title: 'Biography', icon: Icons.edit),
+                        Text(
+                          state.user.bio,
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodyLarge!
+                              .copyWith(height: 1.5),
+                        ),
+                        const TitleWithIcon(
+                            title: 'Pictures', icon: Icons.edit),
+                        Container(
+                          margin: const EdgeInsets.symmetric(vertical: 10),
+                          height: state.user.imageUrls.isNotEmpty ? 125 : 0,
+                          child: ListView.builder(
+                            shrinkWrap: true,
+                            scrollDirection: Axis.horizontal,
+                            itemCount: state.user.imageUrls.length,
+                            itemBuilder: (context, index) {
+                              return Padding(
+                                padding: const EdgeInsets.only(right: 5.0),
+                                child: UserImage.small(
+                                  width: 100,
+                                  url: state.user.imageUrls[index],
+                                  border: Border.all(
+                                    color: Theme.of(context).primaryColor,
+                                  ),
+                                ),
+                              );
+                            },
+                          ),
+                        ),
+                        const TitleWithIcon(title: 'GitHub', icon: Icons.edit),
+                        Text(
+                          state.user.gitHub,
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodyLarge!
+                              .copyWith(height: 1.5),
+                        ),
+                        const TitleWithIcon(
+                            title: 'Interest', icon: Icons.edit),
+                        TextButton(
+                          onPressed: () {
+                            context.read<AuthRepository>().signOut();
+                          },
+                          child: Center(
+                            child: Text(
+                              'Sign Out',
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .headlineSmall!
+                                  .copyWith(
+                                      color: Theme.of(context).primaryColor),
                             ),
                           ),
                         ),
-                      );
-                    },
-                  ),
-                ),
-                const TitleWithIcon(title: 'Location', icon: Icons.edit),
-                Text(
-                  'Singapore, 1 Shenton Way',
-                  style: Theme.of(context)
-                      .textTheme
-                      .bodyLarge!
-                      .copyWith(height: 1.5),
-                ),
-                const TitleWithIcon(title: 'Interests', icon: Icons.edit),
-                const Row(
-                  children: [
-                    CustomTextContainer(text: 'MUSIC'),
-                    CustomTextContainer(text: 'ECONOMICS'),
-                    CustomTextContainer(text: 'FOOTBALL'),
-                  ],
-                )
-              ],
-            ),
-          ),
-        ],
+                      ],
+                    ),
+                  )
+                ],
+              );
+            } else {
+              return const Text('Something went wrong.');
+            }
+          },
+        ),
       ),
     );
   }
@@ -160,56 +166,11 @@ class TitleWithIcon extends StatelessWidget {
           title,
           style: Theme.of(context).textTheme.displaySmall,
         ),
-        IconButton(icon: Icon(icon), onPressed: () {})
+        IconButton(
+          icon: Icon(icon),
+          onPressed: () {},
+        ),
       ],
-    );
-  }
-}
-
-class CustomImageContainer extends StatelessWidget {
-  const CustomImageContainer({
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 10.0, right: 10.0),
-      child: Container(
-        height: 150,
-        width: 100,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(5.0),
-          border: Border(
-            bottom: BorderSide(
-              width: 1,
-              color: Theme.of(context).primaryColor,
-            ),
-            top: BorderSide(
-              width: 1,
-              color: Theme.of(context).primaryColor,
-            ),
-            left: BorderSide(
-              width: 1,
-              color: Theme.of(context).primaryColor,
-            ),
-            right: BorderSide(
-              width: 1,
-              color: Theme.of(context).primaryColor,
-            ),
-          ),
-        ),
-        child: Align(
-          alignment: Alignment.bottomRight,
-          child: IconButton(
-            icon: Icon(
-              Icons.add_circle,
-              color: Theme.of(context).colorScheme.primary,
-            ),
-            onPressed: () {},
-          ),
-        ),
-      ),
     );
   }
 }
