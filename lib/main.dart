@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart' as fauth;
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -78,7 +79,9 @@ class MyApp extends StatelessWidget {
         child: MaterialApp(
           title: 'TuncJob',
           theme: theme(),
-          initialRoute: OnboardingScreen.routeName,
+          initialRoute: fauth.FirebaseAuth.instance.currentUser != null
+              ? HomeScreen.routeName
+              : OnboardingScreen.routeName,
           onGenerateRoute: AppRouter.onGenerateRoute,
         ),
       ),

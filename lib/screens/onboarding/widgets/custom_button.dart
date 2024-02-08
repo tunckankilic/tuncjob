@@ -31,10 +31,12 @@ class CustomButton extends StatelessWidget {
       ),
       child: ElevatedButton(
         onPressed: () async {
-          tabController.animateTo(tabController.index + 1);
+          tabController.index == 7
+              ? null
+              : tabController.animateTo(tabController.index + 1);
           if (tabController.index == 2) {
             context.read<SignupCubit>().signUpWithCredentials();
-          } else if (tabController.index == 6) {
+          } else if (tabController.index == 7) {
             Navigator.of(context).pushReplacementNamed(HomeScreen.routeName);
           }
         },

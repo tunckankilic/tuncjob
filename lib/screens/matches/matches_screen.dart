@@ -42,19 +42,23 @@ class MatchesScreen extends StatelessWidget {
                     shrinkWrap: true,
                     scrollDirection: Axis.horizontal,
                     itemBuilder: (context, index) {
-                      return Column(
-                        children: [
-                          UserImage.small(
-                            height: 70,
-                            width: 70,
-                            url:
-                                inactiveMatches[index].matchedUser.imageUrls[0],
-                          ),
-                          Text(
-                            inactiveMatches[index].matchedUser.name,
-                            style: Theme.of(context).textTheme.headlineSmall,
-                          ),
-                        ],
+                      return Padding(
+                        padding: const EdgeInsets.only(right: 10),
+                        child: Column(
+                          children: [
+                            UserImage.small(
+                              height: 70,
+                              width: 70,
+                              url: inactiveMatches[index]
+                                  .matchedUser
+                                  .imageUrls[0],
+                            ),
+                            Text(
+                              inactiveMatches[index].matchedUser.name,
+                              style: Theme.of(context).textTheme.headlineSmall,
+                            ),
+                          ],
+                        ),
                       );
                     },
                     itemCount: inactiveMatches.length,
@@ -69,43 +73,53 @@ class MatchesScreen extends StatelessWidget {
                 ),
                 ListView.builder(
                   itemBuilder: (context, index) {
-                    return GestureDetector(
-                      onTap: () => Navigator.of(context).pushNamed(
-                          ChatScreen.routeName,
-                          arguments: activeMatches[index]),
-                      child: Row(
-                        children: [
-                          UserImage.small(
-                            height: 70,
-                            width: 70,
-                            url:
-                                inactiveMatches[index].matchedUser.imageUrls[0],
-                          ),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                activeMatches[index].matchedUser.name,
-                                style:
-                                    Theme.of(context).textTheme.headlineSmall,
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 5),
+                      child: GestureDetector(
+                        onTap: () => Navigator.of(context).pushNamed(
+                            ChatScreen.routeName,
+                            arguments: activeMatches[index]),
+                        child: Row(
+                          children: [
+                            UserImage.small(
+                              height: 70,
+                              width: 70,
+                              url: inactiveMatches[index]
+                                  .matchedUser
+                                  .imageUrls[0],
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(left: 8.0),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    activeMatches[index].matchedUser.name,
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .headlineSmall,
+                                  ),
+                                  Text(
+                                    activeMatches[index]
+                                        .chat![0]
+                                        .messages[0]
+                                        .message,
+                                    style:
+                                        Theme.of(context).textTheme.titleLarge,
+                                  ),
+                                  Text(
+                                    activeMatches[index]
+                                        .chat![0]
+                                        .messages[0]
+                                        .timeString,
+                                    style:
+                                        Theme.of(context).textTheme.titleLarge,
+                                  ),
+                                ],
                               ),
-                              Text(
-                                activeMatches[index]
-                                    .chat![0]
-                                    .messages[0]
-                                    .message,
-                                style: Theme.of(context).textTheme.titleLarge,
-                              ),
-                              Text(
-                                activeMatches[index]
-                                    .chat![0]
-                                    .messages[0]
-                                    .timeString,
-                                style: Theme.of(context).textTheme.titleLarge,
-                              ),
-                            ],
-                          ),
-                        ],
+                            ),
+                          ],
+                        ),
                       ),
                     );
                   },

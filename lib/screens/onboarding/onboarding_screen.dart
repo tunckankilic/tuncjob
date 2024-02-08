@@ -24,6 +24,9 @@ class OnboardingScreen extends StatelessWidget {
     Tab(text: 'Pictures'),
     Tab(text: 'Biography'),
     Tab(text: "Social"),
+    Tab(
+      text: "Passing to",
+    )
   ];
 
   @override
@@ -49,6 +52,7 @@ class OnboardingScreen extends StatelessWidget {
               Pictures(tabController: tabController),
               Bio(tabController: tabController),
               Social(tabController: tabController),
+              Container()
             ],
           ),
         );
